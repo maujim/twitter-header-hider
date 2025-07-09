@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Twitter Header Hider",
+  "version": "1.0",
+  "description": "Hides the Twitter header until you hover over it.",
+  "permissions": ["activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
