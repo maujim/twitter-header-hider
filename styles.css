@@ -1,11 +1,7 @@
-
-.header-cover {
+#gemini-twitter-header-cover {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 53px; /* Adjust this to the actual height of the header */
-  background-color: #1DA1F2; /* Twitter blue */
   z-index: 9999;
-  cursor: pointer;
+  transition: opacity 0.2s ease;
+  pointer-events: auto;
+  opacity: 1;
 }

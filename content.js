@@ -1,20 +1,48 @@
+function setupHeaderCover() {
+  // Use a more specific selector based on the HTML provided
+  const header = document.querySelector('header[role="banner"]');
+  if (!header) {
+    return;
+  }
 
-const header = document.querySelector('header');
+  let cover = document.getElementById('gemini-twitter-header-cover');
+  if (!cover) {
+    cover = document.createElement('div');
+    cover.id = 'gemini-twitter-header-cover';
+    document.body.appendChild(cover);
 
-if (header) {
-  const cover = document.createElement('div');
-  cover.classList.add('header-cover');
-  document.body.appendChild(cover);
+    // When mouse enters the cover, make it transparent to reveal the header
+    cover.addEventListener('mouseenter', () => {
+      cover.style.opacity = '0';
+      cover.style.pointerEvents = 'none';
+    });
 
-  cover.addEventListener('mouseover', () => {
-    header.style.display = 'block';
-    cover.style.display = 'none';
-  });
+    // When mouse leaves the header area, make the cover visible again
+    header.addEventListener('mouseleave', () => {
+      cover.style.opacity = '1';
+      cover.style.pointerEvents = 'auto';
+    });
+  }
 
-  header.addEventListener('mouseleave', () => {
-    header.style.display = 'none';
-    cover.style.display = 'block';
-  });
+  // Dynamically update cover's position, size, and color to match the header and page
+  const rect = header.getBoundingClientRect();
+  const bodyBackgroundColor = window.getComputedStyle(document.body).backgroundColor;
 
-  header.style.display = 'none';
+  cover.style.top = `${rect.top}px`;
+  cover.style.left = `${rect.left}px`;
+  cover.style.width = `${rect.width}px`;
+  cover.style.height = `${rect.height}px`;
+  cover.style.backgroundColor = bodyBackgroundColor;
 }
+
+// Use a MutationObserver to handle Twitter's dynamic content loading.
+// This will re-run the setup function whenever the page content changes.
+const observer = new MutationObserver(setupHeaderCover);
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
+});
+
+// Also run on window resize to catch layout changes
+window.addEventListener('resize', setupHeaderCover);
