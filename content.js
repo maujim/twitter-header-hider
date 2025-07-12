@@ -24,6 +24,14 @@ function setupHeaderCover() {
     });
   }
 
+  // Check if the current URL matches the specified pattern
+  const urlPattern = /^https:\/\/x\.com\/[^/]+\/status\/\d+\/photo\/\d+$/;
+  if (urlPattern.test(window.location.href)) {
+    // If it matches, keep the header hidden
+    cover.style.opacity = '0';
+    cover.style.pointerEvents = 'none';
+  }
+
   // Dynamically update cover's position, size, and color to match the header and page
   const rect = header.getBoundingClientRect();
   const bodyBackgroundColor = window.getComputedStyle(document.body).backgroundColor;
