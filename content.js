@@ -24,8 +24,13 @@ function setupHeaderCover() {
     });
   }
 
-  // Check if the current URL matches the specified pattern
-  const urlPattern = /^https:\/\/x\.com\/[^/]+\/status\/\d+\/photo\/\d+$/;
+  // covers the following patterns
+  // https://x.com/<username>/status/<id>/photo/<id>
+  // https://x.com/<username>/status/<id>/video/<id>
+  // https://x.com/<username>/photo
+  // https://x.com/<username>/header_photo
+  const urlPattern = /^https:\/\/x\.com\/[^/]+\/(?:status\/\d+\/(?:photo|video)\/\d+|photo|header_photo)$/;
+
   if (urlPattern.test(window.location.href)) {
     // If it matches, keep the header hidden
     cover.style.opacity = '0';
